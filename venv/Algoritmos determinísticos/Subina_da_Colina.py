@@ -70,7 +70,7 @@ def convergiu(ultimasSolucoes):
     if len(ultimasSolucoes) < 10: #tamanh minimo de k(=10) elementos
         return False; #pois temos poucos elementos para concluir se ouve convergência
     ultimos = len(ultimasSolucoes) - 10 # olhar no proxímo laço as últimas k(=10) avaliações
-    pontos = 0#para contar as avaliações que convergiram
+    pontos = 0 #para contar as avaliações que convergiram
     for i in range(ultimos, len(ultimasSolucoes)):
         if abs(ultimasSolucoes[ultimos] - ultimasSolucoes[i]) >= 0.001:
             pontos += 1

@@ -2,7 +2,7 @@ import random
 from math import sin, pi, exp
 
 def recozimentoSimulado(maximoIteracoes):
-    T = 0
+    T = 10
     x = inicializar()
     t = 1
     ultimasSolucoes = []
@@ -13,7 +13,7 @@ def recozimentoSimulado(maximoIteracoes):
             ultimasSolucoes.append(x)
         elif random.random() < exp((avaliar(xl) - avaliar(x))/T): # pois é um problema de maximização
             x = xl
-        T = g(T,0.5)
+        T = g(T,0.99)
         t += 1
     return x
 
@@ -38,7 +38,7 @@ def convergiu(ultimasSolucoes):
     if len(ultimasSolucoes) < 10: #tamanh minimo de k(=10) elementos
         return False; #pois temos poucos elementos para concluir se ouve convergência
     ultimos = len(ultimasSolucoes) - 10 # olhar no proxímo laço as últimas k(=10) avaliações
-    pontos = 0#para contar as avaliações que convergiram
+    pontos = 0 #para contar as avaliações que convergiram
     for i in range(ultimos, len(ultimasSolucoes)):
         if abs(ultimasSolucoes[ultimos] - ultimasSolucoes[i]) >= 0.001:
             pontos += 1
