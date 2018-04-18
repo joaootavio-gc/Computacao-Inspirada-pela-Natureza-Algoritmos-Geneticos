@@ -46,7 +46,7 @@ def subinaColinaEstocastico(maximoIteracoes, T):
             xl = 1
         if xl < 0:
             xl = 0
-        if random.random() < (1/(1+exp((avaliar(xl) > avaliar(x))/T))): # pois é um problema de maximização
+        if random.random() < (1/(1+exp((avaliar(xl) - avaliar(x))/T))): # pois é um problema de maximização
             x = xl
             ultimasSolucoes.append(x)
         t += 1
@@ -68,12 +68,13 @@ def perturbar(x):
 
 def convergiu(ultimasSolucoes):
     if len(ultimasSolucoes) < 10: #tamanh minimo de k(=10) elementos
-        return 0; #pois temos poucos elementos para concluir se ouve convergência
+        return False; #pois temos poucos elementos para concluir se ouve convergência
     ultimos = len(ultimasSolucoes) - 10 # olhar no proxímo laço as últimas k(=10) avaliações
     pontos = 0#para contar as avaliações que convergiram
     for i in range(ultimos, len(ultimasSolucoes)):
-        if ultimasSolucoes[ultimos] - ultimasSolucoes[i] >= abs(0.001):
+        if abs(ultimasSolucoes[ultimos] - ultimasSolucoes[i]) >= 0.001:
             pontos += 1
     if pontos >= 10: #k(=10)
-        return 1
-    return 0
+        return True
+    return False
+
