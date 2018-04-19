@@ -35,7 +35,6 @@ def selecionar(populacao, aptidao):
         porcaoRoleta.append((360*aptidao[i]/somaAptidoes) + porcaoRoleta[i-1])
     for i in range(0, 8):
         sorteado = random.randint(0, 360)
-        somaAuxiliar = 0 #para percorrer as porções da roleta buscando o elemento correto
         i = 0 #para guardar o indice do individuo escolhido
         while porcaoRoleta[i] < sorteado:
             i += 1
@@ -43,7 +42,27 @@ def selecionar(populacao, aptidao):
     return selecionados
 
 def reproduzir(populacao, aptidao, probabilidadeCrossOver):
-    return 1
+    i = 0
+    novaPopulacao = []
+    while i < len(populacao):
+        if random.random() <= probabilidadeCrossOver: #fazer o cruzamento entre dois indivíduos
+            pontoCrossOver = random.randint(1, 11) #pois a posição 0 e a 12 degeneram o cross over
+            filho1 = [0] * 12
+            filho2 = [0] * 12
+            for j in range(0, pontoCrossOver):
+                filho1[j] = populacao[i][j]
+                filho2[j] = populacao[i+1][j]
+            while j < 12:
+                filho1[j] = populacao[i+1][j]
+                filho2[j] = populacao[i][j]
+                j += 1
+            novaPopulacao.append(filho1)
+            novaPopulacao.append(filho2)
+        else: #os pais originais são repetidos na próxima geração
+            novaPopulacao.append(populacao[i])
+            novaPopulacao.append(populacao[i+1])
+        i += 2
+    return novaPopulacao
 
 def variar(populacao, probabilidadeMutacao):
     return 1
