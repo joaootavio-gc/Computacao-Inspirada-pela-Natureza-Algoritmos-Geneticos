@@ -1,5 +1,4 @@
-from Subina_da_Colina import *
-from Recozimento_Simulado import *
+import numpy
 
-#print(subinaColinaIterativo(10,10))
-print(recozimentoSimulado(1000))
+individuo = numpy.random.randint(2, size = 8)
+individuo = numpy.random.randint(2, size = 8)
