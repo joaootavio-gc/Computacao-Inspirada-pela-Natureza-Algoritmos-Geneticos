@@ -7,13 +7,15 @@ def Problema1(probabilidadeCrossOver, probabilidadeMutacao):
         print('Um indivíduo alcançou o alvo!\n')
 
     t = 1
-    while True:
+    while not(atingiuAlvo(aptidao)):
         populacao = selecionar(populacao, aptidao)
         populacao = reproduzir(populacao, aptidao, probabilidadeCrossOver)
         populacao = variar(populacao, probabilidadeMutacao)
         aptidao   = avaliar(populacao)
         t += 1
-
+    print("Numero de iterações: %d" %t)
+    for individuo in populacao:
+        print(individuo)
 
 def inicializar():
     populacao = []
@@ -38,6 +40,8 @@ def selecionar(populacao, aptidao):
         i = 0 #para guardar o indice do individuo escolhido
         while porcaoRoleta[i] < sorteado:
             i += 1
+            if i <= 7:
+                break
         selecionados.append(populacao[i])
     return selecionados
 
@@ -65,7 +69,11 @@ def reproduzir(populacao, aptidao, probabilidadeCrossOver):
     return novaPopulacao
 
 def variar(populacao, probabilidadeMutacao):
-    return 1
+    for individuo in populacao:
+        for gene in range(0, len(individuo)):
+            if random.random() <= probabilidadeMutacao:
+                individuo[gene] = 1 if individuo[gene] == 0 else 0 # expressão condicional para inverter o bit
+    return populacao
 
 def avaliar(populacao):
     alvo = [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1]
@@ -76,7 +84,11 @@ def avaliar(populacao):
         aptidao.append(numpy.sum(numpy.array(individuo) == numpy.array(alvo)))
     return aptidao
 
+def atingiuAlvo(aptidao):
+    return True if 12 in aptidao else False
+
+
 if __name__ == '__main__':
-    probabilidadeCrossOver = 1
-    probabilidadeMutacao = 1
+    probabilidadeCrossOver = 0.7
+    probabilidadeMutacao = 0.00
     Problema1(probabilidadeCrossOver, probabilidadeMutacao)
